@@ -13,7 +13,6 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-
 def bot():
     try:
         getTarefas = requests.get(
@@ -28,22 +27,23 @@ def bot():
             if 'não executado' == format(tarefas['estado']):
                 requests.put('https://apibot.stv.com.br/api/tarefa/editar/{}'.format(
                     tarefas['pk_id_tarefa']), params={'estado': 'executando'})
-                # arquivo = open('teste.txt', 'w')
-                # arquivo.write(format(tarefas['pk_id_tarefa']))
-                # arquivo.close()
-                # run([sys.executable,"C:/Users/bot.rpa/Desktop/Python/automacao.exe"])
-
-                # arquivo = open('teste.txt', 'r')
-                # url = arquivo.readline(10)
-                # arquivo.close()
+                
                 getEtapas = requests.get(
                     'https://apibot.stv.com.br/api/etapas/{}'.format(tarefas['pk_id_tarefa']))
+                
+                getObstaculos = requests.get(
+                    'https://apibot.stv.com.br/api/tarefa/obstaculo/{}'.format(tarefas['pk_id_tarefa']))
+                
+                
 
                 etapas = getEtapas.json()
+                obstaculos = getObstaculos.json()
 
                 pyautogui.hotkey('winleft', 'm')
-                for etapas in etapas:
 
+                for etapas in etapas:
+                    print(etapas)
+                    
                     if 'clicar' == format(etapas['acao']):
 
                         procurar = "sim"
@@ -64,11 +64,24 @@ def bot():
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
                                 parar = parar + 1
+                                if obstaculos != [] :
+                                    try:
+                                        for obstaculos in obstaculos:
+                                            print('tentando')
+                                            urllib.request.urlretrieve(
+                                            'https://apibot.stv.com.br/storage/{}'.format(obstaculos['acao']), 'acao.png')
+                                            acao = Image.open('acao.png')
+                                            clicar = pyautogui.locateCenterOnScreen(acao, confidence=0.85,)
+                                            pyautogui.click(clicar.x, clicar.y)
+                                            acao.close()
+                                    except:
+                                        print('Obstaculo não encontrado')
+                                    acao.close()
                                 if parar == 5:
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -103,11 +116,24 @@ def bot():
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
                                 parar = parar + 1
+                                if obstaculos != [] :
+                                    try:
+                                        for obstaculos in obstaculos:
+                                            print('tentando')
+                                            urllib.request.urlretrieve(
+                                            'https://apibot.stv.com.br/storage/{}'.format(obstaculos['acao']), 'acao.png')
+                                            acao = Image.open('acao.png')
+                                            clicar = pyautogui.locateCenterOnScreen(acao, confidence=0.85,)
+                                            pyautogui.click(clicar.x, clicar.y)
+                                            acao.close()
+                                    except:
+                                        print('Obstaculo não encontrado')
+                                    acao.close()
                                 if parar == 5:
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -144,11 +170,24 @@ def bot():
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
                                 parar = parar + 1
+                                if obstaculos != [] :
+                                    try:
+                                        for obstaculos in obstaculos:
+                                            print('tentando')
+                                            urllib.request.urlretrieve(
+                                            'https://apibot.stv.com.br/storage/{}'.format(obstaculos['acao']), 'acao.png')
+                                            acao = Image.open('acao.png')
+                                            clicar = pyautogui.locateCenterOnScreen(acao, confidence=0.85,)
+                                            pyautogui.click(clicar.x, clicar.y)
+                                            acao.close()
+                                    except:
+                                        print('Obstaculo não encontrado')
+                                    acao.close()
                                 if parar == 5:
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -183,11 +222,24 @@ def bot():
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
                                 parar = parar + 1
+                                if obstaculos != [] :
+                                    try:
+                                        for obstaculos in obstaculos:
+                                            print('tentando')
+                                            urllib.request.urlretrieve(
+                                            'https://apibot.stv.com.br/storage/{}'.format(obstaculos['acao']), 'acao.png')
+                                            acao = Image.open('acao.png')
+                                            clicar = pyautogui.locateCenterOnScreen(acao, confidence=0.85,)
+                                            pyautogui.click(clicar.x, clicar.y)
+                                            acao.close()
+                                    except:
+                                        print('Obstaculo não encontrado')
+                                    acao.close()
                                 if parar == 5:
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -238,7 +290,7 @@ def bot():
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -275,7 +327,7 @@ def bot():
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -326,11 +378,24 @@ def bot():
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
                                 parar = parar + 1
+                                if obstaculos != [] :
+                                    try:
+                                        for obstaculos in obstaculos:
+                                            print('tentando')
+                                            urllib.request.urlretrieve(
+                                            'https://apibot.stv.com.br/storage/{}'.format(obstaculos['acao']), 'acao.png')
+                                            acao = Image.open('acao.png')
+                                            clicar = pyautogui.locateCenterOnScreen(acao, confidence=0.85,)
+                                            pyautogui.click(clicar.x, clicar.y)
+                                            acao.close()
+                                    except:
+                                        print('Obstaculo não encontrado')
+                                    acao.close()
                                 if parar == 5:
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -368,7 +433,7 @@ def bot():
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -404,8 +469,32 @@ def bot():
                                     pyautogui.typewrite(
                                     digitar , interval=0.05)
                                     pyautogui.hotkey('enter')
-                                else:
+                                elif verificar == 'atual':
                                     digitar = format(etapas['digitar']) + (str(diaAtual.strftime('%m%y')))
+                                    pyautogui.typewrite(
+                                    digitar , interval=0.05)
+                                    pyautogui.hotkey('enter')
+                                elif verificar == 'semana':
+                                    hoje = datetime.today() 
+                                    idx = (hoje.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
+                                    segunda = hoje - timedelta(idx-1)
+                                    terça = hoje - timedelta(idx-2)
+                                    quarta = hoje - timedelta(idx-3)
+                                    quinta = hoje - timedelta(idx-4)
+                                    sexta = hoje - timedelta(idx-5)
+                                    sabado = hoje - timedelta(idx-6)
+                                    if format(etapas['digitar']) == 'segunda' :
+                                        digitar = str(segunda.strftime('%d/%m/%y'))
+                                    elif format(etapas['digitar']) == 'terça' :
+                                        digitar = str(terça.strftime('%d/%m/%y'))
+                                    elif format(etapas['digitar']) == 'quarta' :
+                                        digitar = str(quarta.strftime('%d/%m/%y'))
+                                    elif format(etapas['digitar']) == 'quinta' :
+                                        digitar = str(quinta.strftime('%d/%m/%y'))
+                                    elif format(etapas['digitar']) == 'sexta' :
+                                        digitar = str(sexta.strftime('%d/%m/%y'))
+                                    elif format(etapas['digitar']) == 'sabado' :
+                                        digitar = str(sabado.strftime('%d/%m/%y'))
                                     pyautogui.typewrite(
                                     digitar , interval=0.05)
                                     pyautogui.hotkey('enter')
@@ -417,11 +506,20 @@ def bot():
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
                                 parar = parar + 1
+                                if obstaculos != [] :
+                                    for obstaculos in obstaculos:
+                                        print('tentando')
+                                        urllib.request.urlretrieve(
+                                        'https://apibot.stv.com.br/storage/{}'.format(obstaculos['acao']), 'acao.png')
+                                        acao = Image.open('acao.png')
+                                        clicar = pyautogui.locateCenterOnScreen(acao, confidence=0.85,)
+                                        pyautogui.click(clicar.x, clicar.y)
+                                    acao.close()
                                 if parar == 5:
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -449,13 +547,17 @@ def bot():
                         subject = "RPA - Retorno"
                         
                         nomeArquivo = format(etapas['atalho'])
-                        corpo_email = 'Segue em anexo o Arquivo '+ str(nomeArquivo) + '\nAtt,\nBOT de Automação' 
+                        if nomeArquivo == 'SerpoPCD.pdf,,' :
+                            corpo_email = 'Bom dia, Segue a informação semanal com o ranking para identificar aqueles que estão com as cotas estabelecidas. \nAtt,\nBOT de Automação'
+                        else:
+                            corpo_email = 'Segue em anexo o Arquivo '+ str(nomeArquivo) + '\nAtt,\nBOT de Automação' 
                                         
                         email_msg = MIMEMultipart()
                         email_msg['From'] = remetente
                         email_msg['To'] = emails
                         email_msg['Subject'] = subject
                         email_msg.attach(MIMEText(corpo_email,'plain'))
+                        print(emails)
                         
                         
                         anexo = "C:/RPA/Arquivos/"
@@ -473,12 +575,13 @@ def bot():
                         while procurar == "sim":
                             try:
                                 smtpObj = smtplib.SMTP(servidor_smtp)
-                                smtpObj.sendmail(email_msg['From'],email_msg['To'],email_msg.as_string())
+                                smtpObj.sendmail(email_msg['From'],emails.split(';'),email_msg.as_string())
                                 imagem.close()
                                 time.sleep(tempo)
                                 procurar = "não"
                                 for f in filenames:
                                     os.remove(anexo + f)
+                                print('Email Enviado!!')
                             except:
                                 time.sleep(5)
                                 print('Arquivo não encontrado')
@@ -487,7 +590,7 @@ def bot():
                                     dataHoraErro = datetime.now()
                                     myScreenshot = pyautogui.screenshot()
                                     myScreenshot.save('error.png')
-                                    payload = {'fk_id_tarefa': format(etapas['fk_id_tarefa']),
+                                    payload = {'fk_id_tarefa_log': format(etapas['fk_id_tarefa_etapa']),
                                             'nome_etapa': format(etapas['nome_etapa']),
                                             'fk_id_etapa': format(etapas['pk_id_etapa']),
                                             'status': 'Erro',
@@ -499,9 +602,45 @@ def bot():
                                     print('Processo parou por falta de resposta')
                                     requests.put('https://apibot.stv.com.br/api/tarefa/editar/{}'.format(tarefas['pk_id_tarefa']), params={'estado': 'erro'})
                                     quit()
+
+                    if 'Se...se não...' == format(etapas['acao']):
+
+                        procurar = "sim"
+                        tempo = float(format(etapas['tempo_execucao']))
+                        urllib.request.urlretrieve(
+                            'https://apibot.stv.com.br/storage/{}'.format(etapas['caminho']), 'aaa.png')
+                        imagem = Image.open('aaa.png')
+                        parar = 0
+                        while procurar == "sim":
+                            try:
+                                img = pyautogui.locateCenterOnScreen(
+                                    imagem, confidence=0.85,)
+                                pyautogui.moveTo(img.x, img.y)
+                                imagem.close()
+                                print('Imagem encontrada!')
+                                procurar = "não"
+                                time.sleep(tempo)
+                            except:
+                                print('Não encontrado!')
+                                parar = parar + 1
+                                time.sleep(5)
+                                if parar == 5:
+                                    requests.put('https://apibot.stv.com.br/api/tarefa/editar/{}'.format(tarefas['pk_id_tarefa']), params={'estado': 'Exceção'})
+                                    print("trocando para tarefa filha!")
+                                    requests.put('https://apibot.stv.com.br/api/tarefa/editar/{}'.format(etapas['digitar']), params={'estado': 'não executado'})
+                                    time.sleep(5)
+                                    procurar = "não"
+                                    exit()
+                                    
+                                    
                 #Fora dos blocos               
                 requests.put('https://apibot.stv.com.br/api/tarefa/editar/{}'.format(tarefas['pk_id_tarefa']), params={'estado': 'Finalizado'})
                 os.remove('aaa.png')
+                os.remove('acao.png')
+                os.remove('obstaculo.png')
+                if format(tarefas['dia_da_semana']) == 'Tarefa Filha' :
+                    requests.put('https://apibot.stv.com.br/api/tarefa/editar/{}'.format(etapas['digitar']), params={'estado': 'Desativado'})
+        
     except:
         data = datetime.now()
         time.sleep(1)
